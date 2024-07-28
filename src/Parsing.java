@@ -56,9 +56,7 @@ public class Parsing {
         for (Element a : elements) {
 
             String absUrl = a.absUrl("href");
-            if (isLink(absUrl, constantPart) && !isFile(absUrl)
-                //  && absUrl.contains("https://skillbox.ru")
-            ) {
+            if (isLink(absUrl, constantPart) && !isFile(absUrl)) {
                 list.add(absUrl);
             }
         }

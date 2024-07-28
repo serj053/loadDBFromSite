@@ -5,7 +5,8 @@ public class LoadSites {
         long start = System.currentTimeMillis();
         ForkJoinPool fp = new ForkJoinPool();
         String url = "https://skillbox.ru";
-        ManyThreads mt = new ManyThreads(url, constantPart(url));
+        int counter = 0;
+        ManyThreads mt = new ManyThreads(url, constantPart(url), counter);
         fp.invoke(mt);
         for (String urlStr : ManyThreads.urlsPool) {
             System.out.println(urlStr);
