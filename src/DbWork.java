@@ -50,10 +50,16 @@ public class DbWork {
         Statement statement = connection.createStatement();
         statement.execute("TRUNCATE TABLE information");
     }
+    public void setUtf8mb4() throws SQLException {
+        Statement statement = connection.createStatement();
+        statement.execute("alter table site.information" +
+                " convert to character set utf8mb4 collate utf8mb4_unicode_ci");
+    }
 
     public static void main(String[] args) throws SQLException {
         DbWork db = new DbWork();
         db.truncate();
+        db.setUtf8mb4();
 //        db.delete("");
         db.get();
         //       db.save("url, name, text", "'url2', 'name2', 'text2'");
@@ -79,3 +85,4 @@ public class DbWork {
 //        connection.close();
     }
 }
+//alter table site.information convert to character set utf8mb4 collate utf8mb4_unicode_ci

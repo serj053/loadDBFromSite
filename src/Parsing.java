@@ -78,16 +78,18 @@ public class Parsing {
 
 
     public static void main(String[] args) throws IOException, SQLException, InterruptedException {
-        String url = "https://lenta.ru";
+        String url = "https://skillbox.ru";
         long start = System.currentTimeMillis();
         DbWork db = new DbWork();
         Parsing p = new Parsing(url);
         Set<String> list = p.getList();
         int n = 0;
-        for (String urlChils : list) {
-            System.out.println(urlChils);
-            db.save("url, name, text", "'" + urlChils + "','Lenta', '"
-                    + p.getText(urlChils) + "'");
+        for (String urlChilds : list) {
+            Thread.sleep(100);
+            System.out.println(urlChilds);
+            String text = p.getText(urlChilds);
+            db.save("url, name, text", "'urlChilds','Skillbox', '"
+                    + text + "'");
             n++;
         }
         db.connection.close();
@@ -96,11 +98,13 @@ public class Parsing {
     }
 
     public String getText(String url) throws IOException {
-        if (isLink(url, "lenta") && !isFile(url)) {
-            Document document = Jsoup.connect(url).ignoreHttpErrors(true).get();
+        if (isLink(url, constantPart) && !isFile(url)) {
+            Document document = Jsoup.connect(url)
+                    .ignoreHttpErrors(true).ignoreContentType(true).get();
             String text = document.body().text()
                     .replace("'", "\"")
                     .replace("\\", "");
+     //       System.out.println(text);
             return text;
         }
         return "";
