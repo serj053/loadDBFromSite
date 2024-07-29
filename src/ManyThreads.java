@@ -36,8 +36,19 @@ public class ManyThreads extends RecursiveAction {
             if (!urlsPool.contains(urlsNextPage)) {
                 n++;
                 urlsPool.add(urlsNextPage);
-                Document document = null;
-                String name = null;
+                Document document;
+                try {
+                    Thread.sleep(150);
+                    document = Jsoup.connect(urlsNextPage)
+                            .ignoreHttpErrors(true)
+                            .ignoreContentType(true)
+                            .get();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                String name = document.title();
                 String text = null;
                 try {
                     dbWork.save("url, name, text", "'"

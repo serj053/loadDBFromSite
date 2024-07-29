@@ -5,7 +5,7 @@ public class LoadSites {
     public static void main(String[] args) throws SQLException {
         long start = System.currentTimeMillis();
         ForkJoinPool fp = new ForkJoinPool();
-        String url = "https://skillbox.ru";
+        String url = "https://lenta.ru";
         DbWork db = new DbWork();
         int counter = 0;
         ManyThreads mt = new ManyThreads(url, constantPart(url), db, counter);
