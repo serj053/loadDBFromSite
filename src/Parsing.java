@@ -13,6 +13,7 @@ import java.util.Set;
 public class Parsing {
     String url;
     String constantPart;
+    String siteName;
 
     public Parsing(String url) {
         this.url = url;
@@ -52,6 +53,7 @@ public class Parsing {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        this.siteName = document.title();
         Elements elements = document.select("body").select("a");
         for (Element a : elements) {
 
@@ -78,6 +80,7 @@ public class Parsing {
 
 
     public static void main(String[] args) throws IOException, SQLException, InterruptedException {
+        //String url = " https://urban-university.ru";
         String url = "https://skillbox.ru";
         long start = System.currentTimeMillis();
         DbWork db = new DbWork();
@@ -88,7 +91,7 @@ public class Parsing {
             Thread.sleep(100);
             System.out.println(urlChilds);
             String text = p.getText(urlChilds);
-            db.save("url, name, text", "'urlChilds','Skillbox', '"
+            db.save("url, name, text", "'" + url + "','" + p.siteName + "', '"
                     + text + "'");
             n++;
         }
@@ -104,7 +107,7 @@ public class Parsing {
             String text = document.body().text()
                     .replace("'", "\"")
                     .replace("\\", "");
-     //       System.out.println(text);
+            //       System.out.println(text);
             return text;
         }
         return "";
