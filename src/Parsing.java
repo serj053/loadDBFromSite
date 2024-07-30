@@ -21,7 +21,7 @@ public class Parsing {
     }
 
     static boolean isLink(String link, String constantPart) {
-        String regex = "http[s]?://" + constantPart + "\\.ru[^#,\\s]*";
+        String regex = "http[s]?://" + constantPart + "\\.ru[^#,\\s=]*";
         return link.matches(regex);
         // return url.matches(template);
     }
@@ -45,7 +45,7 @@ public class Parsing {
     public Set<String> getList() {
         Set<String> list = new HashSet<>();
 
-        Connection connection = Jsoup.connect(url).ignoreHttpErrors(true)
+        Connection connection = Jsoup.connect(url).userAgent("Chrome/81.0.4044.138").ignoreHttpErrors(true)
                 .ignoreContentType(true).followRedirects(false);
         Document document = null;
         try {
@@ -81,19 +81,21 @@ public class Parsing {
 
     public static void main(String[] args) throws IOException, SQLException, InterruptedException {
         //String url = " https://urban-university.ru";
-        String url = "https://skillbox.ru";
+        //String url = "https://lenta.ru";
+        String url = "https://uslugi.mosreg.ru/services/21849";
+        //String url = "https://skillbox.ru";
         long start = System.currentTimeMillis();
         DbWork db = new DbWork();
         Parsing p = new Parsing(url);
         Set<String> list = p.getList();
         int n = 0;
         for (String urlChilds : list) {
-            Thread.sleep(100);
+           // Thread.sleep(100);
             System.out.println(urlChilds);
-            String text = p.getText(urlChilds);
-            db.save("url, name, text", "'" + url + "','" + p.siteName + "', '"
-                    + text + "'");
-            n++;
+//            String text = p.getText(urlChilds);
+//            db.save("url, name, text", "'" + url + "','" + p.siteName + "', '"
+//                    + text + "'");
+//            n++;
         }
         db.connection.close();
         System.out.println("n - " + n);
