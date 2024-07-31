@@ -52,7 +52,7 @@ public class Mapping extends RecursiveAction {
                         .replace("'", "\"")
                         .replace("\\", "");
                 try {
-                    dbWork2.save("url, name, text", "'" + urlChildren + "', '"
+                    dbWork2.save("url, name, text", "'" + url + "', '"
                     + name + "', '" + text + "'");
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
