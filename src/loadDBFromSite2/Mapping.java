@@ -37,6 +37,7 @@ public class Mapping extends RecursiveAction {
                     document = Jsoup.connect(urlChildren)
                             .userAgent("Chrome/81.0.4044.138")
                             .ignoreHttpErrors(true)
+                            .ignoreContentType(true)
                             .get();
                 } catch (IOException e) {
                     throw new RuntimeException(e);

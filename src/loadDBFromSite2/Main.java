@@ -12,9 +12,10 @@ public class Main {
         //String url = "https://sky.pro";
         //String url = "https://lenta.ru";
         //String url = "https://skillbox.ru";
-        //String url = "https://urban-university.ru";
+        //String url = "https://urban-university.ru";//*
+        String url = "https://rw6ase.narod.ru/";// 21 минута
         //String url = "https://uslugi.mosreg.ru/services/21849";
-        String url = "https://pythonstart.ru/osnovy/dvumernyy-massiv-v-python-osnovy-raboty";//*
+        //String url = "https://pythonstart.ru/osnovy/dvumernyy-massiv-v-python-osnovy-raboty";//*
         long start = System.currentTimeMillis();
         Mapping.constantPart = getConstantPart(url);
         Mapping task = new Mapping(dbWork2, urlPool, url);

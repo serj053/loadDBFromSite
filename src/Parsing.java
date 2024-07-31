@@ -38,6 +38,7 @@ public class Parsing {
                 || link.contains(".doc")
                 || link.contains(".pptx")
                 || link.contains(".docx")
+                || link.contains(".djvu")
                 || link.contains("?_ga");
 
     }
