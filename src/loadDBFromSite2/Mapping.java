@@ -31,14 +31,15 @@ public class Mapping extends RecursiveAction {
         ParseHtml2 ph = new ParseHtml2();
         tempList = ph.getLinks(url, constantPart);//получаем все ссылки со страницы
         urlPool.add(url);
-        if(currentCounter > counter){
-            return;
-        }
+
         for (String urlChildren : tempList) {
+            if (currentCounter > counter) {
+                return;
+            }
             currentCounter++;
             if (!urlPool.contains(urlChildren)) {
                 urlPool.add(urlChildren);//здесь можно использовать базу - записать текст
-     /*********************************************************/
+                /*********************************************************/
                 Document document = null;
                 try {
                     document = Jsoup.connect(urlChildren)
@@ -55,19 +56,20 @@ public class Mapping extends RecursiveAction {
                         .replace("\\", "");
                 String name = document.title()
                         .replace("'", "\"")
-                        .replace("\\", "");;
+                        .replace("\\", "");
+                ;
                 String text = document.body().text()
                         .replace("'", "\"")
                         .replace("\\", "");
                 try {
                     dbWork2.save("url, name, text", "'" + url + "', '"
-                    + name + "', '" + text + "'");
+                            + name + "', '" + text + "'");
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-     /*****************************************************************************/
+                /*****************************************************************************/
                 Mapping task = new Mapping(dbWork2, urlPool, urlChildren, counter);
                 task.fork();
                 taskList.add(task);

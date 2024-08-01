@@ -17,7 +17,7 @@ public class Main {
         //String url = "https://uslugi.mosreg.ru/services/21849";
         //String url = "https://pythonstart.ru/osnovy/dvumernyy-massiv-v-python-osnovy-raboty";//*
         long start = System.currentTimeMillis();
-        int counter = 10;// ограничительный счетчик потоков (загружаемых страниц)
+        int counter = 20;// ограничительный счетчик потоков (загружаемых страниц)
         Mapping.constantPart = getConstantPart(url);
         Mapping task = new Mapping(dbWork2, urlPool, url, counter);
         fjp.invoke(task);
