@@ -35,6 +35,7 @@ public class Mapping extends RecursiveAction {
                 Document document = null;
                 try {
                     document = Jsoup.connect(urlChildren)
+                            .timeout(100000)
                             .userAgent("Chrome/81.0.4044.138")
                             .ignoreHttpErrors(true)
                             .ignoreContentType(true)

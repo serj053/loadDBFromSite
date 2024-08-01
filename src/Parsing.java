@@ -46,8 +46,11 @@ public class Parsing {
     public Set<String> getList() {
         Set<String> list = new HashSet<>();
 
-        Connection connection = Jsoup.connect(url).userAgent("Chrome/81.0.4044.138").ignoreHttpErrors(true)
-                .ignoreContentType(true).followRedirects(false);
+        Connection connection = Jsoup.connect(url).userAgent("Chrome/81.0.4044.138")
+                .timeout(10000)
+                .ignoreHttpErrors(true)
+                .ignoreContentType(true)
+                .followRedirects(false);
         Document document = null;
         try {
             document = connection.get();
@@ -106,7 +109,9 @@ public class Parsing {
     public String getText(String url) throws IOException {
         if (isLink(url, constantPart) && !isFile(url)) {
             Document document = Jsoup.connect(url)
-                    .ignoreHttpErrors(true).ignoreContentType(true).get();
+                    .timeout(100000)
+                    .ignoreHttpErrors(true)
+                    .ignoreContentType(true).get();
             String text = document.body().text()
                     .replace("'", "\"")
                     .replace("\\", "");

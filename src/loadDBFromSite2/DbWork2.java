@@ -6,7 +6,7 @@ public class DbWork2 {
     public Connection connection;
 
     public DbWork2() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/site2";//?autoReconnect=true";
+        String url = "jdbc:mysql://localhost:3306/site";//?autoReconnect=true";
         String name = "root";
         String pass = "3141";
         connection = DriverManager.getConnection(url, name, pass);
