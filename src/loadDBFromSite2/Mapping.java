@@ -14,11 +14,14 @@ public class Mapping extends RecursiveAction {
     String url;
     ConcurrentSkipListSet<String> urlPool;//собираем все ссылки с текущей страницы
     public static String constantPart;
+    private int counter;
+    static private int currentCounter;
 
-    public Mapping(DbWork2 dbWork2, ConcurrentSkipListSet<String> urlPool, String url) {
+    public Mapping(DbWork2 dbWork2, ConcurrentSkipListSet<String> urlPool, String url, int counter) {
         this.dbWork2 = dbWork2;
         this.urlPool = urlPool;
         this.url = url;
+        this.counter = counter;
     }
 
     @Override
@@ -28,7 +31,11 @@ public class Mapping extends RecursiveAction {
         ParseHtml2 ph = new ParseHtml2();
         tempList = ph.getLinks(url, constantPart);//получаем все ссылки со страницы
         urlPool.add(url);
+        if(currentCounter > counter){
+            return;
+        }
         for (String urlChildren : tempList) {
+            currentCounter++;
             if (!urlPool.contains(urlChildren)) {
                 urlPool.add(urlChildren);//здесь можно использовать базу - записать текст
      /*********************************************************/
@@ -61,11 +68,10 @@ public class Mapping extends RecursiveAction {
                     throw new RuntimeException(e);
                 }
      /*****************************************************************************/
-                Mapping task = new Mapping(dbWork2, urlPool, urlChildren);
+                Mapping task = new Mapping(dbWork2, urlPool, urlChildren, counter);
                 task.fork();
                 taskList.add(task);
             }
-            continue;
         }
         for (Mapping task : taskList) {
             task.join();//дожидаемся выполнения задачи и получаем результат (кода в объекте)

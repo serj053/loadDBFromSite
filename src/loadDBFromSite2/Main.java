@@ -17,15 +17,17 @@ public class Main {
         //String url = "https://uslugi.mosreg.ru/services/21849";
         //String url = "https://pythonstart.ru/osnovy/dvumernyy-massiv-v-python-osnovy-raboty";//*
         long start = System.currentTimeMillis();
+        int counter = 10;// ограничительный счетчик потоков (загружаемых страниц)
         Mapping.constantPart = getConstantPart(url);
-        Mapping task = new Mapping(dbWork2, urlPool, url);
+        Mapping task = new Mapping(dbWork2, urlPool, url, counter);
         fjp.invoke(task);
         long finish = System.currentTimeMillis() - start;
-
+        int n = 0;
         for (String urls : urlPool) {
             System.out.println(urls);
+            n++;
         }
-        System.out.println("* full time - " + finish / 1000 + " секунд");
+        System.out.println("count - " + n + "   * full time - " + finish / 1000 + " секунд");
 
     }
 
